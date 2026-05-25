@@ -18,49 +18,23 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Build APK
+      - name: Build Debug APK
         working-directory: android
         run: |
           chmod +x gradlew 2>/dev/null || true
           if [ ! -f "gradlew" ]; then
-            sudo apt-get update -qq && sudo apt-get install -y -qq wget unzip 2>/dev/null || true
+            apt-get update -qq && apt-get install -y -qq wget unzip 2>/dev/null || true
             wget -q https://services.gradle.org/distributions/gradle-8.5-bin.zip -O /tmp/gradle.zip
             unzip -q /tmp/gradle.zip -d /tmp/gradle
             /tmp/gradle/gradle-8.5/bin/gradle wrapper
           fi
           chmod +x gradlew
           export ANDROID_HOME=$ANDROID_SDK_ROOT
-          ./gradlew assembleRelease --no-daemon
+          ./gradlew assembleDebug --no-daemon
 
-      - name: Sign APK
-        run: |
-          # Generate a keystore for signing
-          keytool -genkey -v -keystore /tmp/vehicle.keystore \
-            -alias vehicle-key -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass 123456 -keypass 123456 \
-            -dname "CN=vehicle-query, OU=dev, O=community, L=Shenzhen, ST=GD, C=CN"
-
-          # Find and sign the APK
-          APK=$(find android -name "*.apk" | head -1)
-          echo "Signing: $APK"
-          cp "$APK" /tmp/app-unsigned.apk
-          
-          # Use apksigner from Android SDK
-          $ANDROID_SDK_ROOT/build-tools/*/apksigner sign \
-            --ks /tmp/vehicle.keystore \
-            --ks-pass pass:123456 \
-            --key-pass pass:123456 \
-            --ks-key-alias vehicle-key \
-            --out /tmp/app-signed.apk \
-            /tmp/app-unsigned.apk
-
-          # Verify signature
-          $ANDROID_SDK_ROOT/build-tools/*/apksigner verify /tmp/app-signed.apk
-          echo "Signed APK ready!"
-
-      - name: Upload APK
+      - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: vehicle-query.apk
-          path: /tmp/app-signed.apk
+          name: 车辆查询.apk
+          path: android/app/build/outputs/apk/debug/*.apk
           if-no-files-found: error

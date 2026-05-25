@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="车辆查询">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>小区车辆查询</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
@@ -365,6 +371,11 @@ renderRecent();
 // Initial
 updateClearBtn();
 ra.innerHTML = '<div class="empty-state"><div class="eicon">🔍</div>输入车牌、房号或手机号<br><span class="hint">点上方按钮可快速筛选</span></div>';
+
+// Register service worker for installable PWA
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js');
+}
 </script>
 </body>
 </html>

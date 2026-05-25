@@ -1,0 +1,23 @@
+{
+  "name": "小区车辆查询",
+  "short_name": "车辆查询",
+  "description": "小区车辆信息查询工具，支持车牌、房号、手机号搜索",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#1565c0",
+  "theme_color": "#1565c0",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

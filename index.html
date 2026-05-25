@@ -101,52 +101,13 @@ body.dark-mode .action-btn{box-shadow:0 3px 8px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
-<div id="installBanner" style="display:none;background:linear-gradient(135deg,#1a73e8,#0d47a1);color:#fff;text-align:center;padding:16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.25)">
-<div style="font-size:22px;font-weight:700;margin-bottom:6px">安装车辆查询到桌面</div>
-<div style="font-size:15px;opacity:0.9;margin-bottom:12px">点下方按钮安装，以后不用扫码直接打开</div>
-<button id="installBtn" style="background:#fff;color:#1a73e8;border:none;padding:12px 48px;border-radius:30px;font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2)">📲 安装到手机</button>
-<div id="manualHint" style="display:none;font-size:14px;opacity:0.8;margin-top:10px">如未弹出安装提示，请点浏览器右上角<span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">···</span> → <b>安装应用</b> 或 <b>添加到主屏幕</b></div>
+<div id="installBanner" style="display:none;background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;text-align:center;padding:16px 12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.3)">
+<div style="font-size:20px;font-weight:700;margin-bottom:4px">添加到桌面方便使用</div>
+<div style="font-size:14px;opacity:0.9">点浏览器 <span style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:4px">···</span> → <b>添加到主屏幕</b></div>
 </div>
 <script>
-// PWA install prompt
-var deferredPrompt = null;
-var installBtn = document.getElementById('installBtn');
-var manualHint = document.getElementById('manualHint');
-
-window.addEventListener('beforeinstallprompt', function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-    if(/android|harmony|huawei/i.test(navigator.userAgent)){
-        document.getElementById('installBanner').style.display = 'block';
-        manualHint.style.display = 'none';
-    }
-});
-
-installBtn.addEventListener('click', function(){
-    if(deferredPrompt){
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function(result){
-            if(result.outcome === 'accepted'){
-                document.getElementById('installBanner').style.display = 'none';
-            }
-            deferredPrompt = null;
-        });
-    } else {
-        // PWA prompt not available, show manual instructions
-        manualHint.style.display = 'block';
-        installBtn.textContent = '📋 按上面步骤操作';
-        installBtn.style.opacity = '0.7';
-    }
-});
-
-// Also auto-show manual hint on Android after a delay if no PWA prompt
-if(/android|harmony|huawei/i.test(navigator.userAgent)){
+if(/android|harmony|huawei|miui|coloros/i.test(navigator.userAgent)) {
     document.getElementById('installBanner').style.display = 'block';
-    setTimeout(function(){
-        if(deferredPrompt === null){
-            manualHint.style.display = 'block';
-        }
-    }, 5000);
 }
 </script>
 

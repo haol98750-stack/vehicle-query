@@ -101,9 +101,11 @@ body.dark-mode .action-btn{box-shadow:0 3px 8px rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
-<div id="installBanner" style="display:none;background:#4caf50;color:#fff;text-align:center;padding:12px;font-size:18px;font-weight:700;position:sticky;top:0;z-index:100">点击安装车辆查询APP → <a href="https://github.com/haol98750-stack/vehicle-query/releases/download/v1.0.0/vehicle-query.apk" style="color:#fff;text-decoration:underline;font-size:22px" download>下载安装</a></div>
+<div id="installBanner" style="display:none;background:#4caf50;color:#fff;text-align:center;padding:14px;font-size:20px;font-weight:700;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,0.2)">
+📲 点击安装车辆查询APP 
+<a href="vehicle-query.apk" style="display:inline-block;background:#fff;color:#2e7d32;padding:8px 24px;border-radius:8px;margin-left:10px;font-size:20px;text-decoration:none;font-weight:800">下载安装</a>
+</div>
 <script>
-// Show install banner only on Android
 if(/android|harmony|huawei/i.test(navigator.userAgent)) {
     document.getElementById('installBanner').style.display = 'block';
 }
